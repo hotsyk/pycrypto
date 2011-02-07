@@ -57,9 +57,9 @@ integers, MPZ objects, or whatever."""
         parameter required by some algorithms.
         """
         wasString=0
-        if isinstance(plaintext, types.StringType):
+        if isinstance(plaintext, types.StringType)  or isinstance(plaintext, types.UnicodeType):
             plaintext=bytes_to_long(plaintext) ; wasString=1
-        if isinstance(K, types.StringType):
+        if isinstance(K, types.StringType) or isinstance(K, types.UnicodeType):
             K=bytes_to_long(K)
         ciphertext=self._encrypt(plaintext, K)
         if wasString: return tuple(map(long_to_bytes, ciphertext))
@@ -72,7 +72,7 @@ integers, MPZ objects, or whatever."""
         wasString=0
         if not isinstance(ciphertext, types.TupleType):
             ciphertext=(ciphertext,)
-        if isinstance(ciphertext[0], types.StringType):
+        if isinstance(ciphertext[0], types.StringType) or isinstance(ciphertext[0], types.UnicodeType):
             ciphertext=tuple(map(bytes_to_long, ciphertext)) ; wasString=1
         plaintext=self._decrypt(ciphertext)
         if wasString: return long_to_bytes(plaintext)
